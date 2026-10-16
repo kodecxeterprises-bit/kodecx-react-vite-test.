@@ -1,0 +1,31 @@
+steps:
+  - name: Check out repository
+    uses: actions/checkout@v4
+
+  - name: Set up Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20
+
+  - name: Extract project ZIP
+    run: |
+      test -f kodecx-react-vite.zip || (echo 'Missing kodecx-react-vite.zip in the repository root' && exit 1)
+      mkdir -p source
+      unzip -q kodecx-react-vite.zip -d source
+      test -f source/kodecx-react-vite/package.json || (echo 'ZIP does not contain kodecx-react-vite/package.json' && exit 1)
+
+  - name: Install dependencies
+    working-directory: source/kodecx-react-vite
+    run: npm install
+
+  - name: Build production site
+    working-directory: source/kodecx-react-vite
+    run: npm run build
+
+  - name: Upload compiled dist folder
+    uses: actions/upload-artifact@v4
+    with:
+      name: kodecx-dist
+      path: source/kodecx-react-vite/dist/
+      if-no-files-found: error
+      retention-days: 7

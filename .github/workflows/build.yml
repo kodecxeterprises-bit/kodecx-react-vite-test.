@@ -1,6 +1,7 @@
 name: Build Kodecx React Vite site
 'on':
 workflow_dispatch:
+
 jobs:
 build:
 runs-on: ubuntu-latest
@@ -11,10 +12,10 @@ with:
 node-version: 20
 - name: Extract project ZIP
 run: |
-test -f kodecx-react-vite.zip
+test -f kodecx-react-vite.zip || exit 1
 mkdir -p source
 unzip -q kodecx-react-vite.zip -d source
-test -f source/kodecx-react-vite/package.json
+test -f source/kodecx-react-vite/package.json || exit 1
 - name: Install dependencies
 working-directory: source/kodecx-react-vite
 run: npm install

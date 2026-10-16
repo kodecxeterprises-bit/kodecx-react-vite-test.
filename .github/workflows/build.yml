@@ -1,16 +1,17 @@
 name: Build Kodecx React Vite site
 
 on:
-  workflow_dispatch:
+workflow_dispatch:
 
 permissions:
-  contents: read
+contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+build:
+runs-on: ubuntu-latest
 
-    steps:- name: Check out repository
+steps:
+  - name: Check out repository
     uses: actions/checkout@v4
 
   - name: Set up Node.js
